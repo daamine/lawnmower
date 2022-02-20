@@ -28,8 +28,8 @@ public class Main {
 			LOG.error("The path to mower instructions file should be specified!");
 			return;
 		} 
-		final File lanwMowerInputFile = new File(args[0]);
-		final LawnConfiguration configuration = MowerInstructionReader.read(lanwMowerInputFile);
+		final File lawnMowerInputFile = new File(args[0]);
+		final LawnConfiguration configuration = MowerInstructionReader.read(lawnMowerInputFile);
 		final List<LawnMower> lawnMowers = MowerInstructionReader.createLawnMowersFromConfiguration(configuration);
 		LawnMowerInstructor lawnMowerInstructor = new LawnMowerInstructor(lawnMowers, configuration.getLawnMowersInstructions());
 		lawnMowerInstructor.execute();

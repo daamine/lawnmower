@@ -29,11 +29,11 @@ import com.project.lawnmower.MowerPosition;
 public class MowerInstructionReader {
 	private static final Logger LOG = Logger.getLogger("com.project.lawnmower.reader");
 
-	public static LawnConfiguration read(File lanwMowerInputFile) throws FileNotFoundException, IOException, IllegalArgumentException {
+	public static LawnConfiguration read(File lawnMowerInputFile) throws FileNotFoundException, IOException, IllegalArgumentException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("MowerInstructionReader: read file " + lanwMowerInputFile.getAbsolutePath());
+			LOG.debug("MowerInstructionReader: read file " + lawnMowerInputFile.getAbsolutePath());
 		}
-		try(BufferedReader br = new BufferedReader(new FileReader(lanwMowerInputFile))) {
+		try(BufferedReader br = new BufferedReader(new FileReader(lawnMowerInputFile))) {
 			StringBuilder sb = new StringBuilder();
 
 			// The first line is the coordinates of the upper-right corner of the lawn.
@@ -43,17 +43,17 @@ public class MowerInstructionReader {
 				line = line.trim();
 				String[] coordinatesStr = line.split(" ");
 				if (coordinatesStr.length != 2) {
-					throw new IllegalArgumentException("Wrong coordinates format " + line + " in file " + lanwMowerInputFile.getAbsolutePath());
+					throw new IllegalArgumentException("Wrong coordinates format " + line + " in file " + lawnMowerInputFile.getAbsolutePath());
 				}
 				Integer[] coordinates = Arrays.stream(coordinatesStr).map(Integer::parseInt).toArray(Integer[]::new);
 				int width = coordinates[0].intValue() + 1;
 				int length = coordinates[1].intValue() + 1;
 				if (width < 1 || length <1) {
-					throw new IllegalArgumentException("Negative upper-right lawn coordinates " + line + " in file " + lanwMowerInputFile.getAbsolutePath());
+					throw new IllegalArgumentException("Negative upper-right lawn coordinates " + line + " in file " + lawnMowerInputFile.getAbsolutePath());
 				}
 				lawnDimension = new LawnDimension(width, length);
 			} else {
-				throw new IllegalArgumentException("Empty file " + lanwMowerInputFile.getAbsolutePath());
+				throw new IllegalArgumentException("Empty file " + lawnMowerInputFile.getAbsolutePath());
 			}
 
 			// the new two lines for each mower are:
@@ -69,18 +69,18 @@ public class MowerInstructionReader {
 				line = line.trim();
 				String[] moverPositionAndOrientation = line.split(" ");
 				if (moverPositionAndOrientation.length != 3) {
-					throw new IllegalArgumentException("Wrong mower position and orientation format " + line + " in file " + lanwMowerInputFile.getAbsolutePath());
+					throw new IllegalArgumentException("Wrong mower position and orientation format " + line + " in file " + lawnMowerInputFile.getAbsolutePath());
 				}
 				int mowerXPosition = Integer.parseInt(moverPositionAndOrientation[0]);
 				int mowerYPosition = Integer.parseInt(moverPositionAndOrientation[1]);
 				if (mowerXPosition < 0 || mowerYPosition <0) {
-					throw new IllegalArgumentException("Negative mower initial position coordinates " + line + " in file " + lanwMowerInputFile.getAbsolutePath());
+					throw new IllegalArgumentException("Negative mower initial position coordinates " + line + " in file " + lawnMowerInputFile.getAbsolutePath());
 				}
 				String mowerDirection = moverPositionAndOrientation[2].trim();
 				if (mowerDirection.length() != 1) {
-					throw new IllegalArgumentException("Wrong mower orientation format " + line + " in file " + lanwMowerInputFile.getAbsolutePath());
+					throw new IllegalArgumentException("Wrong mower orientation format " + line + " in file " + lawnMowerInputFile.getAbsolutePath());
 				}
-				CardinalDirection cardinalDirection = transformToCardinalDirection(moverPositionAndOrientation[2].trim().charAt(0), lanwMowerInputFile);
+				CardinalDirection cardinalDirection = transformToCardinalDirection(moverPositionAndOrientation[2].trim().charAt(0), lawnMowerInputFile);
 				MowerPosition initialMowerPosition = new MowerPosition(mowerXPosition, mowerYPosition, cardinalDirection);
 				initialMowersPosition.add(initialMowerPosition);
 
@@ -88,22 +88,22 @@ public class MowerInstructionReader {
 				List<MowerInstruction> mowerInstructions;
 				if (line != null && !line.isEmpty()) {
 					line = line.trim();
-					mowerInstructions = createInstructionsFromInputLine(line, lanwMowerInputFile);
+					mowerInstructions = createInstructionsFromInputLine(line, lawnMowerInputFile);
 				} else {
-					throw new IllegalArgumentException("Missing mower instruction line in file " + lanwMowerInputFile.getAbsolutePath());
+					throw new IllegalArgumentException("Missing mower instruction line in file " + lawnMowerInputFile.getAbsolutePath());
 				}
 				mowersInstructions.put(mowerId, mowerInstructions);
 				mowerId++;
 				line = br.readLine();
 			}
 			if (initialMowersPosition.isEmpty()) {
-				throw new IllegalArgumentException("No mower configuration found in file " + lanwMowerInputFile.getAbsolutePath());
+				throw new IllegalArgumentException("No mower configuration found in file " + lawnMowerInputFile.getAbsolutePath());
 			}
 			return new LawnConfiguration(lawnDimension, initialMowersPosition, mowersInstructions);
 		}
 	}
 
-	private static List<MowerInstruction> createInstructionsFromInputLine(String line, File lanwMowerInputFile) {
+	private static List<MowerInstruction> createInstructionsFromInputLine(String line, File lawnMowerInputFile) {
 		List<MowerInstruction> mowerInstructions = new ArrayList<MowerInstruction>();
 		for(int i = 0; i < line.length(); i++) {
 			char instruction = line.charAt(i);
@@ -118,13 +118,13 @@ public class MowerInstructionReader {
 				mowerInstructions.add(MowerInstruction.FORWARD);
 				break;
 			default:
-				throw new IllegalArgumentException("Unsupported mower instruction " + instruction + " in file " + lanwMowerInputFile.getAbsolutePath());
+				throw new IllegalArgumentException("Unsupported mower instruction " + instruction + " in file " + lawnMowerInputFile.getAbsolutePath());
 			}
 		}
 		return mowerInstructions;
 	}
 
-	private static CardinalDirection transformToCardinalDirection(char cardinalCharacter, File lanwMowerInputFile) {
+	private static CardinalDirection transformToCardinalDirection(char cardinalCharacter, File lawnMowerInputFile) {
 		switch (cardinalCharacter) {
 		case 'S':
 			return CardinalDirection.SOUTH;
@@ -135,7 +135,7 @@ public class MowerInstructionReader {
 		case 'E':
 			return CardinalDirection.EAST;
 		default: 
-			throw new IllegalArgumentException("Wrong mower orientation " + cardinalCharacter + " in file " + lanwMowerInputFile.getAbsolutePath());
+			throw new IllegalArgumentException("Wrong mower orientation " + cardinalCharacter + " in file " + lawnMowerInputFile.getAbsolutePath());
 		}
 	}
 

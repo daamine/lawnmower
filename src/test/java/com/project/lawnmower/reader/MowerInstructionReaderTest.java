@@ -20,12 +20,12 @@ public class MowerInstructionReaderTest {
 	public void testEmptyFile()
 	{
 		ClassLoader classLoader = getClass().getClassLoader();
-		File lanwMowerInputFile = new File(classLoader.getResource("empty_file.txt").getFile());
+		File lawnMowerInputFile = new File(classLoader.getResource("empty_file.txt").getFile());
 		try {
-			MowerInstructionReader.read(lanwMowerInputFile);
+			MowerInstructionReader.read(lawnMowerInputFile);
 			fail();
 		} catch (IllegalArgumentException | IOException e) {
-			assertEquals("Empty file " + lanwMowerInputFile.getAbsolutePath(), e.getMessage());
+			assertEquals("Empty file " + lawnMowerInputFile.getAbsolutePath(), e.getMessage());
 		}
 	}
 
@@ -33,12 +33,12 @@ public class MowerInstructionReaderTest {
 	public void testFileWithWrongLawnDimension()
 	{
 		ClassLoader classLoader = getClass().getClassLoader();
-		File lanwMowerInputFile = new File(classLoader.getResource("wrong_dimension.txt").getFile());
+		File lawnMowerInputFile = new File(classLoader.getResource("wrong_dimension.txt").getFile());
 		try {
-			MowerInstructionReader.read(lanwMowerInputFile);
+			MowerInstructionReader.read(lawnMowerInputFile);
 			fail();
 		} catch (IllegalArgumentException | IOException e) {
-			assertEquals("Wrong coordinates format 5 5 6 in file " + lanwMowerInputFile.getAbsolutePath(), e.getMessage());
+			assertEquals("Wrong coordinates format 5 5 6 in file " + lawnMowerInputFile.getAbsolutePath(), e.getMessage());
 		}
 	}
 
@@ -46,12 +46,12 @@ public class MowerInstructionReaderTest {
 	public void testFileWithNegativeLawnDimension()
 	{
 		ClassLoader classLoader = getClass().getClassLoader();
-		File lanwMowerInputFile = new File(classLoader.getResource("negative_lawn_dimension.txt").getFile());
+		File lawnMowerInputFile = new File(classLoader.getResource("negative_lawn_dimension.txt").getFile());
 		try {
-			MowerInstructionReader.read(lanwMowerInputFile);
+			MowerInstructionReader.read(lawnMowerInputFile);
 			fail();
 		} catch (IllegalArgumentException | IOException e) {
-			assertEquals("Negative upper-right lawn coordinates 5 -1 in file " + lanwMowerInputFile.getAbsolutePath(), e.getMessage());
+			assertEquals("Negative upper-right lawn coordinates 5 -1 in file " + lawnMowerInputFile.getAbsolutePath(), e.getMessage());
 		}
 	}
 
@@ -59,12 +59,12 @@ public class MowerInstructionReaderTest {
 	public void testFileWithNoInitialPositionOrInstructions()
 	{
 		ClassLoader classLoader = getClass().getClassLoader();
-		File lanwMowerInputFile = new File(classLoader.getResource("no_initial_position_or_instructions.txt").getFile());
+		File lawnMowerInputFile = new File(classLoader.getResource("no_initial_position_or_instructions.txt").getFile());
 		try {
-			MowerInstructionReader.read(lanwMowerInputFile);
+			MowerInstructionReader.read(lawnMowerInputFile);
 			fail();
 		} catch (IllegalArgumentException | IOException e) {
-			assertEquals("No mower configuration found in file " + lanwMowerInputFile.getAbsolutePath(), e.getMessage());
+			assertEquals("No mower configuration found in file " + lawnMowerInputFile.getAbsolutePath(), e.getMessage());
 		}
 	}
 
@@ -72,12 +72,12 @@ public class MowerInstructionReaderTest {
 	public void testFileWithNoMowerInstructions()
 	{
 		ClassLoader classLoader = getClass().getClassLoader();
-		File lanwMowerInputFile = new File(classLoader.getResource("no_mower_instructions.txt").getFile());
+		File lawnMowerInputFile = new File(classLoader.getResource("no_mower_instructions.txt").getFile());
 		try {
-			MowerInstructionReader.read(lanwMowerInputFile);
+			MowerInstructionReader.read(lawnMowerInputFile);
 			fail();
 		} catch (IllegalArgumentException | IOException e) {
-			assertEquals("Missing mower instruction line in file " + lanwMowerInputFile.getAbsolutePath(), e.getMessage());
+			assertEquals("Missing mower instruction line in file " + lawnMowerInputFile.getAbsolutePath(), e.getMessage());
 		}
 	}
 
@@ -85,12 +85,12 @@ public class MowerInstructionReaderTest {
 	public void testFileWithNegativeMowerInitialPosition()
 	{
 		ClassLoader classLoader = getClass().getClassLoader();
-		File lanwMowerInputFile = new File(classLoader.getResource("negative_mower_initial_position.txt").getFile());
+		File lawnMowerInputFile = new File(classLoader.getResource("negative_mower_initial_position.txt").getFile());
 		try {
-			MowerInstructionReader.read(lanwMowerInputFile);
+			MowerInstructionReader.read(lawnMowerInputFile);
 			fail();
 		} catch (IllegalArgumentException | IOException e) {
-			assertEquals("Negative mower initial position coordinates -1 3 E in file " + lanwMowerInputFile.getAbsolutePath(), e.getMessage());
+			assertEquals("Negative mower initial position coordinates -1 3 E in file " + lawnMowerInputFile.getAbsolutePath(), e.getMessage());
 		}
 	}
 
@@ -98,9 +98,9 @@ public class MowerInstructionReaderTest {
 	public void testMowerCoordinateNotInteger()
 	{
 		ClassLoader classLoader = getClass().getClassLoader();
-		File lanwMowerInputFile = new File(classLoader.getResource("string_mower_coordinate.txt").getFile());
+		File lawnMowerInputFile = new File(classLoader.getResource("string_mower_coordinate.txt").getFile());
 		try {
-			MowerInstructionReader.read(lanwMowerInputFile);
+			MowerInstructionReader.read(lawnMowerInputFile);
 			fail();
 		} catch (NumberFormatException e) {
 			assertEquals("For input string: \"x\"", e.getMessage());
@@ -114,12 +114,12 @@ public class MowerInstructionReaderTest {
 	public void testFileWithWrongMowerInstruction()
 	{
 		ClassLoader classLoader = getClass().getClassLoader();
-		File lanwMowerInputFile = new File(classLoader.getResource("wrong_mower_instruction.txt").getFile());
+		File lawnMowerInputFile = new File(classLoader.getResource("wrong_mower_instruction.txt").getFile());
 		try {
-			MowerInstructionReader.read(lanwMowerInputFile);
+			MowerInstructionReader.read(lawnMowerInputFile);
 			fail();
 		} catch (IllegalArgumentException | IOException e) {
-			assertEquals("Unsupported mower instruction S in file " + lanwMowerInputFile.getAbsolutePath(), e.getMessage());
+			assertEquals("Unsupported mower instruction S in file " + lawnMowerInputFile.getAbsolutePath(), e.getMessage());
 		}
 	}
 
@@ -127,9 +127,9 @@ public class MowerInstructionReaderTest {
 	public void testFileWithGoodFormat()
 	{
 		ClassLoader classLoader = getClass().getClassLoader();
-		File lanwMowerInputFile = new File(classLoader.getResource("good_format.txt").getFile());
+		File lawnMowerInputFile = new File(classLoader.getResource("good_format.txt").getFile());
 		try {
-			LawnConfiguration config = MowerInstructionReader.read(lanwMowerInputFile);
+			LawnConfiguration config = MowerInstructionReader.read(lawnMowerInputFile);
 			LawnDimension expectedDimension = new LawnDimension(6, 9);
 			MowerPosition expectedMower1Position = new MowerPosition(1, 2, CardinalDirection.SOUTH);
 			MowerPosition expectedMower2Position = new MowerPosition(3, 0, CardinalDirection.WEST);
