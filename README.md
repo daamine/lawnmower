@@ -1,4 +1,4 @@
-# Lawn mower technical test project 
+# Lawn mower test 
 First, make sure you have Maven and java 11 installed.
 
 After cloning the repository, in order to compile the project and run unit tests go to the root project directory (where pom.xml is located) and execute the below command:
